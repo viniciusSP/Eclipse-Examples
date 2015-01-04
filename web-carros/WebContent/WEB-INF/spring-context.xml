@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+						http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context-4.0.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- AQUI ESTOU DIZENDO O PACOTE ONDE SERÃO ENCONTRADOS MEUS @CONTROLLERS -->
+	<context:component-scan base-package="br.com.webCarros.carros" />
+	<mvc:annotation-driven />
+
+	<!--AQUI ESTOU DECLARANDO A MINHA CLASSE QUE INTERCEPTA AS REQUISIÇÕES HTTP -->
+	<!-- AQUI VOU INTERCEPTAR OS LOGINS -->
+	<mvc:interceptors>
+		<bean class="br.com.webCarros.carros.interceptor.AutorizadorInterceptor"></bean>
+	</mvc:interceptors>
+
+	<!-- COMO CRIEI UMA INJEÇÃO DE DEPENDENCIAS PARA MINHA FACTORY DE CONEXÕES -->
+	<!-- ESTOU DECLARANDO COMO O SPRING VAI "RESOLVER ESSA DEPENDENCIA" DECLARANDO 
+		UM BEAN -->
+	<!-- ISSO TAMBÉM PODERIA SER RESOLVIDO COM HIBERNATE -->
+	<bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://192.168.56.100/fj21"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="vinicius"></property>
+
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+</beans>

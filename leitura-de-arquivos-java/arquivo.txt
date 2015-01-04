@@ -1,0 +1,6 @@
+TEste com o lixo do FileInputStream
+TEstando
+TEstando novamente
+E Testando a ultima linha
+Vai acabar o arquivo
+Acabou
